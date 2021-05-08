@@ -4,13 +4,19 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Inicio</a>
+        <a class="nav-link" href="{{ url_for('index') }}">Inicio</a>
       </li>
+      {% if current_user.tipo_usuario.id == 2 %}
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('test') }}">Libros</a>
+      </li>
+      {% endif %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Otro</a>
+        <a class="nav-link" href="{{ url_for('logout') }}">Cerrar sesión</a>
       </li>
     </ul>
+    <span class="navbar-text"><strong>{{ current_user.usuario }}</strong> - <i>({{ current_user.tipo_usuario.nombre }})</i></span>
   </div>
 </nav>
