@@ -1,6 +1,3 @@
-# pip install flask-script
-# pip install Flask-WTF
-
 from flask_script import Manager, Server
 from app import inicializar_app
 from config import config
