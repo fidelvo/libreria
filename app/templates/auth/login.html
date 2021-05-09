@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Login {% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block customCSS %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
@@ -21,7 +21,7 @@
   {% include 'flash.html' %}
 
 </form>
+{% endblock %}
 {% block customJS %}
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>
-{% endblock %}
 {% endblock %}

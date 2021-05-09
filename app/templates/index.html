@@ -1,6 +1,6 @@
 {% extends 'body.html' %}
 
-{% block title %} Inicio {% endblock %}
+{% block title %}Inicio{% endblock %}
 
 {% block container %}
 <div class="row">
@@ -8,5 +8,71 @@
     <h1>Inicio</h1>
     {% include 'flash.html' %}
   </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-12">
+    <h4>{{ data.titulo }}</h4>
+  </div>
+    {% if current_user.tipo_usuario.id == 1 %}
+
+      {% if data.libros_vendidos|length > 0 %}
+      <table class="table text-center">
+        <thead>
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Libro</th>
+            <th scope="col">U. Vendidas</th>
+            <th scope="col">Precio. U.</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% set contador = namespace(total = 0) %}
+          {% for l in data.libros_vendidos %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ l.titulo }}</td>
+            <td>{{ l.unidades_vendidas }}</td>
+            <td>${{ l.precio }}</td>
+            <td>${{ (l.precio * l.unidades_vendidas) }}</td>
+          </tr>
+          {% set contador.total = contador.total + (l.precio * l.unidades_vendidas) %}
+          {% endfor %}
+          <tr>
+            <th colspan="3"></th>
+            <th>Total</th>
+            <td>${{ contador.total }}</td>
+          </tr>
+        </tbody>
+      </table>
+      {% else %}
+        <div class="col-12">
+          <p>No existen libros vendidos</p>
+        </div>
+      {% endif %}
+
+    {% else %}
+
+      {% if data.compras|length > 0 %}
+        {% for c in data.compras %}
+          <div class="col-md-3">
+            <div class="card m-2 shadow-sm">
+              {% set url = 'img/portadas/' + c.libro.isbn + '.jpg' %}
+              <img src="{{ url_for('static', filename=url) }}" class="card-img-top" alt="{{ c.libro.titulo }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ c.libro.titulo }}</h5>
+                <p class="card-text">{{ c.formatted_date() }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+      <div class="col-12">
+        <p>No hay compras realizadas</p>
+      </div>
+      {% endif %}
+
+    {% endif %}
 </div>
 {% endblock %}
